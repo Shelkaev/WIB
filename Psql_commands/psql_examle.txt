@@ -28,12 +28,12 @@ SELECT date_trunc('month', p.date) AS month, sum(i.price)
 	ORDER BY sum(i.price) DESC NULLS LAST LIMIT 1;
 
 Б) в каком месяце года выручка от пользователей в возрастном диапазоне 35+ самая большая:
-SELECT u.age, p.date, sum(i.price) AS max_sum
+SELECT u.age, date_trunc('month', p.date), sum(i.price) AS max_sum
 	FROM users u 
 	LEFT JOIN purchases p USING(userId) 
 	LEFT JOIN items i USING(itemId)
 	WHERE u.age>=35
-	GROUP BY u.age, p.date
+	GROUP BY u.age, date_trunc('month', p.date)
 	ORDER BY max_sum DESC NULLS LAST LIMIT 1;
 	
 В) какой товар обеспечивает дает наибольший вклад в выручку за последний год:
